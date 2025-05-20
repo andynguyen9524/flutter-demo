@@ -95,8 +95,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Vui lòng nhập email của bạn';
                     }
-                    // Sử dụng regex đơn giản để kiểm tra định dạng email.
-                    // Bạn có thể dùng một regex phức tạp hơn hoặc một package để validate email tốt hơn.
                     if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
                       return 'Email không hợp lệ';
                     }
@@ -106,12 +104,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _passwordController,
-                  obscureText: !_isPasswordVisible, // Ẩn/hiện ký tự mật khẩu.
+                  obscureText: !_isPasswordVisible, 
                   decoration: InputDecoration(
                     labelText: 'Mật khẩu',
                     hintText: 'Nhập mật khẩu của bạn',
                     prefixIcon: const Icon(Icons.lock_outline),
-                    // Nút để chuyển đổi hiển thị mật khẩu.
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isPasswordVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
@@ -138,10 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 12.0),
 
                 Align(
-                  alignment: Alignment.centerRight, // Căn lề phải.
+                  alignment: Alignment.centerRight, 
                   child: TextButton(
                     onPressed: () {
-                      // TODO: Điều hướng đến màn hình quên mật khẩu.
                       print('Nút Quên mật khẩu? được nhấn');
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Chức năng quên mật khẩu chưa được cài đặt.')),
@@ -156,9 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 24.0),
                 
                 ElevatedButton(
-                  // Style của ElevatedButton có thể được định nghĩa trong theme (main.dart)
-                  // hoặc ghi đè ở đây.
-                  onPressed: _submitLogin, // Gọi hàm xử lý khi nút được nhấn.
+                  
+                  onPressed: _submitLogin, 
                   child: const Text('Đăng nhập'),
                 ),
                 const SizedBox(height: 20.0),
