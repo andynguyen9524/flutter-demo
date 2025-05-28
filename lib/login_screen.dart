@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_demo/forget_password.dart';
 import 'create_account.dart';
 import 'home_screen.dart';
 
@@ -35,21 +36,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
       print('$email & $password');
       Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (context) => const HomeScreen()));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Processing'), backgroundColor: Colors.green),
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Processing'), backgroundColor: Colors.green),
+      // );
     } else {
       print('Invalidate');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error'), backgroundColor: Colors.red),
+        SnackBar(content: Text('Invalidate'), backgroundColor: Colors.red),
       );
     }
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login account'),
@@ -71,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 //   size: 100,
                 //   color: Theme.of(context).colorScheme.primary,
                 // ),
-                const SizedBox(height: 24.0,),
+                const SizedBox(height: 24.0),
                 Text(
                   'Welcome',
                   textAlign: TextAlign.center,
@@ -80,7 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
@@ -95,7 +96,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Vui lòng nhập email của bạn';
                     }
-                    if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+                    if (!RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                    ).hasMatch(value)) {
                       return 'Email không hợp lệ';
                     }
                     return null; // Trả về null nếu dữ liệu hợp lệ.
@@ -104,14 +107,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _passwordController,
-                  obscureText: !_isPasswordVisible, 
+                  obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     labelText: 'Mật khẩu',
                     hintText: 'Nhập mật khẩu của bạn',
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isPasswordVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                        _isPasswordVisible
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
                       ),
                       onPressed: () {
                         // Cập nhật trạng thái và yêu cầu Flutter build lại UI.
@@ -135,25 +140,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 12.0),
 
                 Align(
-                  alignment: Alignment.centerRight, 
+                  alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      print('Nút Quên mật khẩu? được nhấn');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Chức năng quên mật khẩu chưa được cài đặt.')),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ForgetPasswordView(),
+                        ),
                       );
                     },
                     child: Text(
                       'Quên mật khẩu?',
-                      style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 24.0),
-                
+
                 ElevatedButton(
-                  
-                  onPressed: _submitLogin, 
+                  onPressed: _submitLogin,
                   child: const Text('Đăng nhập'),
                 ),
                 const SizedBox(height: 20.0),
@@ -163,29 +171,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     const Text("No account"),
                     TextButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const CreateAccount()),
+                          MaterialPageRoute(
+                            builder: (context) => const CreateAccount(),
+                          ),
                         );
-                        print("Nut khoi tao duoc nhan");
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(content: Text("chuc nang chua cai dat")),
-                      // );
                       },
-                     child: Text(
-                      'Dang ky ngay',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
+                      child: Text(
+                        'Dang ky ngay',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      ),)
+                    ),
                   ],
-                )
+                ),
               ],
-          ),),
+            ),
+          ),
         ),
-      )
+      ),
     );
   }
 }
