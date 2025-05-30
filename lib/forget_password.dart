@@ -4,10 +4,10 @@ class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});
 
   @override
-  State<ForgetPasswordView> createState() => _forgetPasswordViewState();
+  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
 }
 
-class _forgetPasswordViewState extends State<ForgetPasswordView> {
+class _ForgetPasswordViewState extends State<ForgetPasswordView> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
 

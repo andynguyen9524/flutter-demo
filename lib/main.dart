@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_demo/home_screen.dart';
 import 'login_screen.dart';
 
 void main() {
@@ -52,7 +53,14 @@ class MyApp extends StatelessWidget{
         )
       ),
       debugShowCheckedModeBanner: false, // Ẩn banner "Debug" ở góc trên phải.
-      home: const LoginScreen(), // Đặt LoginScreen làm màn hình khởi đầu của ứng dụng.
+      // home: const LoginScreen(),
+      initialRoute: '/loginScreen',
+      routes: {
+        '/loginScreen': (context) => const LoginScreen(),
+        '/homeScreen': (context) => HomeScreen(
+          param: ModalRoute.of(context)!.settings.arguments as HomeParam,
+        ),
+      }, // Đặt LoginScreen làm màn hình khởi đầu của ứng dụng.
     );
   }
 }

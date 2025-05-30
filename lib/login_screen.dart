@@ -18,11 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -34,16 +29,15 @@ class _LoginScreenState extends State<LoginScreen> {
       final String email = _emailController.text;
       final String password = _passwordController.text;
 
-      print('$email & $password');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('Processing'), backgroundColor: Colors.green),
-      // );
+      // print('$email & $password');
+      Navigator.pushNamed(context, '/homeScreen', arguments: HomeParam(username: email,onTapItem: (text) {
+         ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(text), backgroundColor: Colors.green),
+        );
+      },));
+     
     } else {
-      print('Invalidate');
+      // print('Invalidate');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Invalidate'), backgroundColor: Colors.red),
       );

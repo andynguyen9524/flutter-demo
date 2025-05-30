@@ -4,10 +4,10 @@ class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
 
   @override
-  State<CreateAccount> createState() => _createAccount();
+  State<CreateAccount> createState() => _CreateAccount();
 }
 
-class _createAccount extends State<CreateAccount> {
+class _CreateAccount extends State<CreateAccount> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
