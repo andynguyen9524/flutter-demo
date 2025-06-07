@@ -1,0 +1,702 @@
+[
+{
+"id": 1,
+"english_word": "Hello",
+"vietnamese_translation": "Xin chào",
+"example_sentence": "Hello, how are you?",
+"category": "Greeting"
+},
+{
+"id": 2,
+"english_word": "Goodbye",
+"vietnamese_translation": "Tạm biệt",
+"example_sentence": "Goodbye, see you later.",
+"category": "Greeting"
+},
+{
+"id": 3,
+"english_word": "Thank you",
+"vietnamese_translation": "Cảm ơn",
+"example_sentence": "Thank you for your help.",
+"category": "Common Phrase"
+},
+{
+"id": 4,
+"english_word": "Please",
+"vietnamese_translation": "Làm ơn",
+"example_sentence": "Please sit down.",
+"category": "Common Phrase"
+},
+{
+"id": 5,
+"english_word": "Yes",
+"vietnamese_translation": "Có",
+"example_sentence": "Yes, I agree.",
+"category": "Common Word"
+},
+{
+"id": 6,
+"english_word": "No",
+"vietnamese_translation": "Không",
+"example_sentence": "No, I don't think so.",
+"category": "Common Word"
+},
+{
+"id": 7,
+"english_word": "I",
+"vietnamese_translation": "Tôi",
+"example_sentence": "I am a student.",
+"category": "Pronoun"
+},
+{
+"id": 8,
+"english_word": "You",
+"vietnamese_translation": "Bạn",
+"example_sentence": "You are my friend.",
+"category": "Pronoun"
+},
+{
+"id": 9,
+"english_word": "He",
+"vietnamese_translation": "Anh ấy",
+"example_sentence": "He is a teacher.",
+"category": "Pronoun"
+},
+{
+"id": 10,
+"english_word": "She",
+"vietnamese_translation": "Cô ấy",
+"example_sentence": "She is a doctor.",
+"category": "Pronoun"
+},
+{
+"id": 11,
+"english_word": "It",
+"vietnamese_translation": "Nó",
+"example_sentence": "It is a cat.",
+"category": "Pronoun"
+},
+{
+"id": 12,
+"english_word": "We",
+"vietnamese_translation": "Chúng tôi",
+"example_sentence": "We are a family.",
+"category": "Pronoun"
+},
+{
+"id": 13,
+"english_word": "They",
+"vietnamese_translation": "Họ",
+"example_sentence": "They are playing football.",
+"category": "Pronoun"
+},
+{
+"id": 14,
+"english_word": "My",
+"vietnamese_translation": "Của tôi",
+"example_sentence": "This is my book.",
+"category": "Possessive"
+},
+{
+"id": 15,
+"english_word": "Your",
+"vietnamese_translation": "Của bạn",
+"example_sentence": "What is your name?",
+"category": "Possessive"
+},
+{
+"id": 16,
+"english_word": "His",
+"vietnamese_translation": "Của anh ấy",
+"example_sentence": "This is his car.",
+"category": "Possessive"
+},
+{
+"id": 17,
+"english_word": "Her",
+"vietnamese_translation": "Của cô ấy",
+"example_sentence": "This is her house.",
+"category": "Possessive"
+},
+{
+"id": 18,
+"english_word": "Its",
+"vietnamese_translation": "Của nó",
+"example_sentence": "The dog wagged its tail.",
+"category": "Possessive"
+},
+{
+"id": 19,
+"english_word": "Our",
+"vietnamese_translation": "Của chúng tôi",
+"example_sentence": "This is our school.",
+"category": "Possessive"
+},
+{
+"id": 20,
+"english_word": "Their",
+"vietnamese_translation": "Của họ",
+"example_sentence": "This is their garden.",
+"category": "Possessive"
+},
+{
+"id": 21,
+"english_word": "What",
+"vietnamese_translation": "Cái gì",
+"example_sentence": "What is this?",
+"category": "Question Word"
+},
+{
+"id": 22,
+"english_word": "Where",
+"vietnamese_translation": "Ở đâu",
+"example_sentence": "Where do you live?",
+"category": "Question Word"
+},
+{
+"id": 23,
+"english_word": "When",
+"vietnamese_translation": "Khi nào",
+"example_sentence": "When will we meet?",
+"category": "Question Word"
+},
+{
+"id": 24,
+"english_word": "Why",
+"vietnamese_translation": "Tại sao",
+"example_sentence": "Why are you sad?",
+"category": "Question Word"
+},
+{
+"id": 25,
+"english_word": "How",
+"vietnamese_translation": "Như thế nào",
+"example_sentence": "How do you do?",
+"category": "Question Word"
+},
+{
+"id": 26,
+"english_word": "Which",
+"vietnamese_translation": "Cái nào",
+"example_sentence": "Which one do you want?",
+"category": "Question Word"
+},
+{
+"id": 27,
+"english_word": "Who",
+"vietnamese_translation": "Ai",
+"example_sentence": "Who is that?",
+"category": "Question Word"
+},
+{
+"id": 28,
+"english_word": "And",
+"vietnamese_translation": "Và",
+"example_sentence": "I like apples and bananas.",
+"category": "Conjunction"
+},
+{
+"id": 29,
+"english_word": "But",
+"vietnamese_translation": "Nhưng",
+"example_sentence": "I am tired, but I will continue.",
+"category": "Conjunction"
+},
+{
+"id": 30,
+"english_word": "Or",
+"vietnamese_translation": "Hoặc",
+"example_sentence": "Do you want tea or coffee?",
+"category": "Conjunction"
+},
+{
+"id": 31,
+"english_word": "Because",
+"vietnamese_translation": "Bởi vì",
+"example_sentence": "I am happy because it is sunny.",
+"category": "Conjunction"
+},
+{
+"id": 32,
+"english_word": "If",
+"vietnamese_translation": "Nếu",
+"example_sentence": "If it rains, we will stay home.",
+"category": "Conjunction"
+},
+{
+"id": 33,
+"english_word": "So",
+"vietnamese_translation": "Vì vậy",
+"example_sentence": "I am hungry, so I will eat.",
+"category": "Conjunction"
+},
+{
+"id": 34,
+"english_word": "A",
+"vietnamese_translation": "Một",
+"example_sentence": "I have a book.",
+"category": "Article"
+},
+{
+"id": 35,
+"english_word": "An",
+"vietnamese_translation": "Một (trước nguyên âm)",
+"example_sentence": "I ate an apple.",
+"category": "Article"
+},
+{
+"id": 36,
+"english_word": "The",
+"vietnamese_translation": "Cái, những",
+"example_sentence": "The cat is sleeping.",
+"category": "Article"
+},
+{
+"id": 37,
+"english_word": "On",
+"vietnamese_translation": "Trên",
+"example_sentence": "The book is on the table.",
+"category": "Preposition"
+},
+{
+"id": 38,
+"english_word": "In",
+"vietnamese_translation": "Trong",
+"example_sentence": "The pen is in the box.",
+"category": "Preposition"
+},
+{
+"id": 39,
+"english_word": "At",
+"vietnamese_translation": "Tại",
+"example_sentence": "I am at home.",
+"category": "Preposition"
+},
+{
+"id": 40,
+"english_word": "To",
+"vietnamese_translation": "Đến",
+"example_sentence": "I am going to school.",
+"category": "Preposition"
+},
+{
+"id": 41,
+"english_word": "From",
+"vietnamese_translation": "Từ",
+"example_sentence": "I am from Vietnam.",
+"category": "Preposition"
+},
+{
+"id": 42,
+"english_word": "With",
+"vietnamese_translation": "Với",
+"example_sentence": "I am with my friends.",
+"category": "Preposition"
+},
+{
+"id": 43,
+"english_word": "For",
+"vietnamese_translation": "Cho",
+"example_sentence": "This gift is for you.",
+"category": "Preposition"
+},
+{
+"id": 44,
+"english_word": "Up",
+"vietnamese_translation": "Lên",
+"example_sentence": "I am going up the stairs.",
+"category": "Preposition"
+},
+{
+"id": 45,
+"english_word": "Down",
+"vietnamese_translation": "Xuống",
+"example_sentence": "I am going down the stairs.",
+"category": "Preposition"
+},
+{
+"id": 46,
+"english_word": "Is",
+"vietnamese_translation": "Là",
+"example_sentence": "He is a student.",
+"category": "Verb"
+},
+{
+"id": 47,
+"english_word": "Are",
+"vietnamese_translation": "Là (số nhiều)",
+"example_sentence": "They are students.",
+"category": "Verb"
+},
+{
+"id": 48,
+"english_word": "Am",
+"vietnamese_translation": "Là (với I)",
+"example_sentence": "I am a student.",
+"category": "Verb"
+},
+{
+"id": 49,
+"english_word": "Have",
+"vietnamese_translation": "Có",
+"example_sentence": "I have a car.",
+"category": "Verb"
+},
+{
+"id": 50,
+"english_word": "Has",
+"vietnamese_translation": "Có (he/she/it)",
+"example_sentence": "He has a car.",
+"category": "Verb"
+},
+{
+"id": 51,
+"english_word": "Do",
+"vietnamese_translation": "Làm",
+"example_sentence": "I do my homework.",
+"category": "Verb"
+},
+{
+"id": 52,
+"english_word": "Does",
+"vietnamese_translation": "Làm (he/she/it)",
+"example_sentence": "He does his homework.",
+"category": "Verb"
+},
+{
+"id": 53,
+"english_word": "Did",
+"vietnamese_translation": "Đã làm",
+"example_sentence": "I did my homework yesterday.",
+"category": "Verb"
+},
+{
+"id": 54,
+"english_word": "Go",
+"vietnamese_translation": "Đi",
+"example_sentence": "I go to school.",
+"category": "Verb"
+},
+{
+"id": 55,
+"english_word": "Went",
+"vietnamese_translation": "Đã đi",
+"example_sentence": "I went to school yesterday.",
+"category": "Verb"
+},
+{
+"id": 56,
+"english_word": "See",
+"vietnamese_translation": "Nhìn",
+"example_sentence": "I see a bird.",
+"category": "Verb"
+},
+{
+"id": 57,
+"english_word": "Saw",
+"vietnamese_translation": "Đã nhìn",
+"example_sentence": "I saw a bird yesterday.",
+"category": "Verb"
+},
+{
+"id": 58,
+"english_word": "Eat",
+"vietnamese_translation": "Ăn",
+"example_sentence": "I eat an apple.",
+"category": "Verb"
+},
+{
+"id": 59,
+"english_word": "Ate",
+"vietnamese_translation": "Đã ăn",
+"example_sentence": "I ate an apple yesterday.",
+"category": "Verb"
+},
+{
+"id": 60,
+"english_word": "Drink",
+"vietnamese_translation": "Uống",
+"example_sentence": "I drink water.",
+"category": "Verb"
+},
+{
+"id": 61,
+"english_word": "Drank",
+"vietnamese_translation": "Đã uống",
+"example_sentence": "I drank water yesterday.",
+"category": "Verb"
+},
+{
+"id": 62,
+"english_word": "Sleep",
+"vietnamese_translation": "Ngủ",
+"example_sentence": "I sleep at night.",
+"category": "Verb"
+},
+{
+"id": 63,
+"english_word": "Slept",
+"vietnamese_translation": "Đã ngủ",
+"example_sentence": "I slept well last night.",
+"category": "Verb"
+},
+{
+"id": 64,
+"english_word": "Work",
+"vietnamese_translation": "Làm việc",
+"example_sentence": "I work at a company.",
+"category": "Verb"
+},
+{
+"id": 65,
+"english_word": "Worked",
+"vietnamese_translation": "Đã làm việc",
+"example_sentence": "I worked hard yesterday.",
+"category": "Verb"
+},
+{
+"id": 66,
+"english_word": "Play",
+"vietnamese_translation": "Chơi",
+"example_sentence": "I play football.",
+"category": "Verb"
+},
+{
+"id": 67,
+"english_word": "Played",
+"vietnamese_translation": "Đã chơi",
+"example_sentence": "I played football yesterday.",
+"category": "Verb"
+},
+{
+"id": 68,
+"english_word": "Study",
+"vietnamese_translation": "Học",
+"example_sentence": "I study English.",
+"category": "Verb"
+},
+{
+"id": 69,
+"english_word": "Studied",
+"vietnamese_translation": "Đã học",
+"example_sentence": "I studied English yesterday.",
+"category": "Verb"
+},
+{
+"id": 70,
+"english_word": "Learn",
+"vietnamese_translation": "Học (kiến thức)",
+"example_sentence": "I learn new things every day.",
+"category": "Verb"
+},
+{
+"id": 71,
+"english_word": "Learned",
+"vietnamese_translation": "Đã học (kiến thức)",
+"example_sentence": "I learned a new word yesterday.",
+"category": "Verb"
+},
+{
+"id": 72,
+"english_word": "Know",
+"vietnamese_translation": "Biết",
+"example_sentence": "I know his name.",
+"category": "Verb"
+},
+{
+"id": 73,
+"english_word": "Knew",
+"vietnamese_translation": "Đã biết",
+"example_sentence": "I knew his name yesterday.",
+"category": "Verb"
+},
+{
+"id": 74,
+"english_word": "Think",
+"vietnamese_translation": "Nghĩ",
+"example_sentence": "I think it is a good idea.",
+"category": "Verb"
+},
+{
+"id": 75,
+"english_word": "Thought",
+"vietnamese_translation": "Đã nghĩ",
+"example_sentence": "I thought it was a good idea yesterday.",
+"category": "Verb"
+},
+{
+"id": 76,
+"english_word": "Say",
+"vietnamese_translation": "Nói",
+"example_sentence": "I say hello.",
+"category": "Verb"
+},
+{
+"id": 77,
+"english_word": "Said",
+"vietnamese_translation": "Đã nói",
+"example_sentence": "I said hello yesterday.",
+"category": "Verb"
+},
+{
+"id": 78,
+"english_word": "Tell",
+"vietnamese_translation": "Nói (với ai)",
+"example_sentence": "I tell you a story.",
+"category": "Verb"
+},
+{
+"id": 79,
+"english_word": "Told",
+"vietnamese_translation": "Đã nói (với ai)",
+"example_sentence": "I told you a story yesterday.",
+"category": "Verb"
+},
+{
+"id": 80,
+"english_word": "Ask",
+"vietnamese_translation": "Hỏi",
+"example_sentence": "I ask a question.",
+"category": "Verb"
+},
+{
+"id": 81,
+"english_word": "Asked",
+"vietnamese_translation": "Đã hỏi",
+"example_sentence": "I asked a question yesterday.",
+"category": "Verb"
+},
+{
+"id": 82,
+"english_word": "Answer",
+"vietnamese_translation": "Trả lời",
+"example_sentence": "I answer the question.",
+"category": "Verb"
+},
+{
+"id": 83,
+"english_word": "Answered",
+"vietnamese_translation": "Đã trả lời",
+"example_sentence": "I answered the question yesterday.",
+"category": "Verb"
+},
+{
+"id": 84,
+"english_word": "Give",
+"vietnamese_translation": "Cho",
+"example_sentence": "I give you a gift.",
+"category": "Verb"
+},
+{
+"id": 85,
+"english_word": "Gave",
+"vietnamese_translation": "Đã cho",
+"example_sentence": "I gave you a gift yesterday.",
+"category": "Verb"
+},
+{
+"id": 86,
+"english_word": "Take",
+"vietnamese_translation": "Lấy",
+"example_sentence": "I take a book.",
+"category": "Verb"
+},
+{
+"id": 87,
+"english_word": "Took",
+"vietnamese_translation": "Đã lấy",
+"example_sentence": "I took a book yesterday.",
+"category": "Verb"
+},
+{
+"id": 88,
+"english_word": "Get",
+"vietnamese_translation": "Nhận, có được",
+"example_sentence": "I get a gift.",
+"category": "Verb"
+},
+{
+"id": 89,
+"english_word": "Got",
+"vietnamese_translation": "Đã nhận, có được",
+"example_sentence": "I got a gift yesterday.",
+"category": "Verb"
+},
+{
+"id": 90,
+"english_word": "Make",
+"vietnamese_translation": "Làm, tạo ra",
+"example_sentence": "I make a cake.",
+"category": "Verb"
+},
+{
+"id": 91,
+"english_word": "Made",
+"vietnamese_translation": "Đã làm, tạo ra",
+"example_sentence": "I made a cake yesterday.",
+"category": "Verb"
+},
+{
+"id": 92,
+"english_word": "Use",
+"vietnamese_translation": "Sử dụng",
+"example_sentence": "I use a computer.",
+"category": "Verb"
+},
+{
+"id": 93,
+"english_word": "Used",
+"vietnamese_translation": "Đã sử dụng",
+"example_sentence": "I used a computer yesterday.",
+"category": "Verb"
+},
+{
+"id": 94,
+"english_word": "Find",
+"vietnamese_translation": "Tìm thấy",
+"example_sentence": "I find my keys.",
+"category": "Verb"
+},
+{
+"id": 95,
+"english_word": "Found",
+"vietnamese_translation": "Đã tìm thấy",
+"example_sentence": "I found my keys yesterday.",
+"category": "Verb"
+},
+{
+"id": 96,
+"english_word": "Come",
+"vietnamese_translation": "Đến",
+"example_sentence": "I come to your house.",
+"category": "Verb"
+},
+{
+"id": 97,
+"english_word": "Came",
+"vietnamese_translation": "Đã đến",
+"example_sentence": "I came to your house yesterday.",
+"category": "Verb"
+},
+{
+"id": 98,
+"english_word": "Want",
+"vietnamese_translation": "Muốn",
+"example_sentence": "I want a book.",
+"category": "Verb"
+},
+{
+"id": 99,
+"english_word": "Wanted",
+"vietnamese_translation": "Đã muốn",
+"example_sentence": "I wanted a book yesterday.",
+"category": "Verb"
+},
+{
+"id": 100,
+"english_word": "Need",
+"vietnamese_translation": "Cần",
+"example_sentence": "I need help.",
+"category": "Verb"
+}
+]
