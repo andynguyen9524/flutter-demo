@@ -11,39 +11,88 @@ class NewsFeedScreen extends StatefulWidget {
 }
 
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
-  NewsApiResponse? _newsData; // Biến để lưu trữ dữ liệu tin tức
-  bool _isLoading = false; // Cờ trạng thái tải
+  NewsApiResponse? _newsData; // Biến để lưu trữ toàn bộ phản hồi tin tức
+  List<Article> _articles = []; // Danh sách các bài viết để hiển thị
+  bool _isLoading = false; // Cờ trạng thái tải ban đầu
+  bool _isFetchingMore = false; // Cờ trạng thái tải thêm dữ liệu
   String? _errorMessage; // Thông báo lỗi
+  int _currentPage = 1; // Trang hiện tại đang tải
+  bool _hasMorePages = true; // Cờ để biết còn trang nào để tải không
 
+  // Khởi tạo ScrollController để theo dõi vị trí cuộn
+  final ScrollController _scrollController = ScrollController();
   // Khởi tạo Dio instance
   final Dio _dio = Dio();
 
   @override
   void initState() {
     super.initState();
-    _fetchNews(); // Tải tin tức khi màn hình được tạo
+    _fetchNews(
+      page: _currentPage,
+      isInitialLoad: true,
+    ); // Tải tin tức ban đầu khi màn hình được tạo
+    // Thêm listener để bắt sự kiện cuộn
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  // Hàm listener cho ScrollController
+  void _onScroll() {
+    // Kiểm tra nếu đã cuộn gần đến cuối danh sách (ví dụ: 90% chiều dài)
+    // và không đang tải, và còn trang để tải
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent * 0.9 &&
+        !_isLoading &&
+        !_isFetchingMore &&
+        _hasMorePages) {
+      print('Đã cuộn gần cuối, tải thêm dữ liệu...');
+      _fetchNews(page: _currentPage, isInitialLoad: false);
+    }
   }
 
   // Hàm bất đồng bộ để lấy tin tức từ API
-  Future<void> _fetchNews() async {
+  // `page`: Trang muốn tải
+  // `isInitialLoad`: True nếu đây là lần tải đầu tiên, False nếu là tải thêm
+  Future<void> _fetchNews({
+    required int page,
+    required bool isInitialLoad,
+  }) async {
+    // Tránh gọi API nhiều lần cùng lúc
+    if (isInitialLoad && _isLoading) return;
+    if (!isInitialLoad && (_isFetchingMore || !_hasMorePages)) return;
+
     setState(() {
-      _isLoading = true;
-      _errorMessage = null;
+      if (isInitialLoad) {
+        _isLoading = true;
+        _articles = []; // Xóa dữ liệu cũ cho lần tải ban đầu
+        _currentPage = 1; // Reset trang về 1
+        _hasMorePages = true; // Giả sử có thêm trang cho lần tải ban đầu
+      } else {
+        _isFetchingMore = true; // Đặt cờ đang tải thêm
+      }
+      _errorMessage = null; // Xóa lỗi cũ
     });
 
     try {
       const String apiUrl =
-          'https://news-api14.p.rapidapi.com/v2/trendings?topic=Sports&language=en';
+          'https://news-api14.p.rapidapi.com/v2/trendings?topic=World&language=en';
 
+      ///v2/trendings?topic=Sports&language=en
       final response = await _dio.get(
         apiUrl,
         queryParameters: {
-          'q':
-              'technology', // Ví dụ: Tìm kiếm tin tức về công nghệ. Bạn có thể thay đổi chủ đề.
-          'lang': 'en', // Ngôn ngữ tiếng Anh
-          'country': 'us', // Quốc gia Hoa Kỳ
-          'media': 'True', // Bao gồm các bài viết có ảnh
-          'page_size': 10, // Lấy 10 bài viết mỗi lần
+          'q': 'technology', // Chủ đề tìm kiếm
+          'lang': 'en', // Ngôn ngữ
+          'country': 'us', // Quốc gia
+          'media': true, // Bao gồm các bài viết có ảnh
+          'page_size': 10, // Số lượng bài viết mỗi trang
+          'page': page, // Trang hiện tại
         },
         options: Options(
           headers: {
@@ -56,10 +105,19 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
 
       if (response.statusCode == 200 && response.data != null) {
         if (response.data is Map<String, dynamic>) {
+          final NewsApiResponse newApiResponse = NewsApiResponse.fromJson(
+            response.data as Map<String, dynamic>,
+          );
           setState(() {
-            _newsData = NewsApiResponse.fromJson(
-              response.data as Map<String, dynamic>,
-            );
+            // Cập nhật _newsData cho toàn bộ response
+            _newsData = newApiResponse;
+            // Thêm các bài viết mới vào danh sách hiện có
+            _articles.addAll(newApiResponse.data ?? []);
+            // Kiểm tra xem còn trang nào để tải không
+            _hasMorePages =
+                (newApiResponse.page ?? 0) < (newApiResponse.totalPages ?? 0);
+            // Chuẩn bị cho lần tải tiếp theo
+            _currentPage = (newApiResponse.page ?? 0) + 1;
           });
         } else {
           setState(() {
@@ -98,6 +156,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     } finally {
       setState(() {
         _isLoading = false;
+        _isFetchingMore = false; // Luôn đặt lại cờ này sau khi tải xong
       });
     }
   }
@@ -113,20 +172,29 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tin Tức Công Nghệ'),
+        title: const Text('Tin Tức Thời Gian Thực'),
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
         centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: _isLoading ? null : _fetchNews,
+            // ĐÃ SỬA: Thêm page: 1 vào lời gọi hàm _fetchNews
+            onPressed:
+                _isLoading || _isFetchingMore
+                    ? null
+                    : () => _fetchNews(
+                      page: 1,
+                      isInitialLoad: true,
+                    ), // Vô hiệu hóa khi đang tải
             tooltip: 'Làm mới tin tức',
           ),
         ],
       ),
       body:
-          _isLoading
+          _isLoading &&
+                  _articles
+                      .isEmpty // Chỉ hiển thị loading ban đầu nếu chưa có bài viết nào
               ? const Center(
                 child: CircularProgressIndicator(color: Colors.blueGrey),
               )
@@ -150,7 +218,12 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: _fetchNews,
+                        // ĐÃ SỬA: Thêm page: 1 vào lời gọi hàm _fetchNews
+                        onPressed:
+                            _isLoading || _isFetchingMore
+                                ? null
+                                : () =>
+                                    _fetchNews(page: 1, isInitialLoad: true),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueGrey,
                           foregroundColor: Colors.white,
@@ -161,18 +234,53 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                   ),
                 ),
               )
-              : _newsData == null || _newsData!.data!.isEmpty
+              : _articles.isEmpty && !_isLoading && _errorMessage == null
               ? const Center(
+                // Trường hợp không có dữ liệu sau khi tải
                 child: Text(
-                  'Không có tin tức để hiển thị. Vui lòng thử lại.',
+                  'Không có tin tức để hiển thị.',
                   style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
               )
               : ListView.builder(
+                controller: _scrollController, // Gán controller vào ListView
                 padding: const EdgeInsets.all(8.0),
-                itemCount: _newsData!.data!.length,
+                itemCount:
+                    _articles.length +
+                    (_isFetchingMore ? 1 : 0) +
+                    (!_hasMorePages && _articles.isNotEmpty
+                        ? 1
+                        : 0), // Thêm 1 item cho loading hoặc thông báo hết dữ liệu
                 itemBuilder: (context, index) {
-                  final article = _newsData!.data![index];
+                  // Hiển thị loading indicator ở cuối danh sách
+                  if (index == _articles.length) {
+                    if (_isFetchingMore) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: CircularProgressIndicator(
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                      );
+                    } else if (!_hasMorePages) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            'Đã tải hết tất cả tin tức! 🎉',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                  // Đảm bảo không truy cập index vượt quá _articles.length
+                  if (index >= _articles.length) {
+                    return const SizedBox.shrink(); // Widget rỗng
+                  }
+
+                  final article = _articles[index];
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 8.0),
                     elevation: 5,
@@ -180,15 +288,17 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: InkWell(
-                      // Dùng InkWell để tạo hiệu ứng nhấp
-                      onTap: () => _launchUrl(article.url), // Mở link bài viết
+                      onTap: () => _launchUrl(article.url),
                       borderRadius: BorderRadius.circular(12.0),
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (article.thumbnail != null)
+                            if (article.thumbnail != null &&
+                                article
+                                    .thumbnail!
+                                    .isNotEmpty) // Kiểm tra cả isNotEmpty
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
                                 child: Image.network(
@@ -243,7 +353,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              article.excerpt,
+                              article.excerpt, // Đã đổi từ snippet
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey,
@@ -254,9 +364,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  article
-                                      .publisher
-                                      .name, // Hiển thị tên nhà xuất bản
+                                  article.publisher.name,
                                   style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
@@ -266,7 +374,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                                 Text(
                                   _formatDateTime(
                                     article.date,
-                                  ), // Định dạng ngày giờ
+                                  ), // Đã đổi từ publishedDatetimeUtc
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey,
@@ -310,7 +418,6 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   String _formatDateTime(String datetimeString) {
     try {
       final DateTime dateTime = DateTime.parse(datetimeString);
-      // Đã loại bỏ timeago.format(dateTime)
       return '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} ${dateTime.day}/${dateTime.month}/${dateTime.year}';
     } catch (e) {
       return datetimeString; // Trả về nguyên bản nếu parse lỗi
