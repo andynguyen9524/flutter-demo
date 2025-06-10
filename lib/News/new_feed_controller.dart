@@ -1,32 +1,37 @@
 import 'package:flutter_application_demo/Network/network.dart';
+import 'package:flutter_application_demo/News/new_feed_state.dart';
 import 'package:flutter_application_demo/models/new_api_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NewFeedController {
-  final List<Article> articles = []; // Danh sách các bài viết để hiển thị
+class NewFeedController extends Cubit<NewFeedState> {
+  NewFeedController() : super(LoadingState());
 
-  String? errorMessage; // Thông báo lỗi
+  final List<Article> _articles = []; // Danh sách các bài viết để hiển thị
+
   int _currentPage = 1; // Trang hiện tại đang tải
 
   Future resetNews() async {
     _currentPage = 1;
-    articles.clear();
+    _articles.clear();
     await fetchNews();
   }
 
-  // Hàm bất đồng bộ để lấy tin tức từ API
-  // `page`: Trang muốn tải
-  // `isInitialLoad`: True nếu đây là lần tải đầu tiên, False nếu là tải thêm
   Future<void> fetchNews() async {
-    // Tránh gọi API nhiều lần cùng lúc
+    emit(LoadingState());
 
     final result = await Network().fetchNews(_currentPage);
     result.fold(
       (l) {
-        errorMessage = l;
+        emit(ErrorState(message: l));
       },
       (r) {
-        articles.addAll(r);
-        _currentPage++;
+        if (r.isEmpty) {
+          emit(NoDataState());
+        } else {
+          _articles.addAll(r);
+          _currentPage++;
+          emit(DataState(data: _articles));
+        }
       },
     );
   }
