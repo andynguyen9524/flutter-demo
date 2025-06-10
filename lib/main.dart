@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_demo/English/random_word_screen.dart';
-import 'package:flutter_application_demo/English/show_word_screen.dart';
 import 'package:flutter_application_demo/News/new_feed_screen.dart';
 import 'package:flutter_application_demo/home_screen.dart';
 import 'login_screen.dart';
-import 'package:flutter_application_demo/Metal/metal_price_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,9 +65,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/newFeedScreen',
       routes: {
         '/newFeedScreen': (context) => const NewsFeedScreen(),
-        '/metalPriceScreen': (context) => const MetalPricesScreen(),
-        '/randomWordScreen': (context) => const RandomWordScreen(),
-        '/wordViewScreen': (context) => const WordViewScreen(),
         '/loginScreen': (context) => const LoginScreen(),
         '/homeScreen':
             (context) => HomeScreen(

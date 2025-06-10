@@ -86,14 +86,6 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
       ///v2/trendings?topic=Sports&language=en
       final response = await _dio.get(
         apiUrl,
-        queryParameters: {
-          'q': 'technology', // Chủ đề tìm kiếm
-          'lang': 'en', // Ngôn ngữ
-          'country': 'us', // Quốc gia
-          'media': true, // Bao gồm các bài viết có ảnh
-          'page_size': 10, // Số lượng bài viết mỗi trang
-          'page': page, // Trang hiện tại
-        },
         options: Options(
           headers: {
             'X-RapidAPI-Host': 'news-api14.p.rapidapi.com',
@@ -131,7 +123,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
               'Không thể tải tin tức: ${response.statusCode} - ${response.statusMessage}';
         });
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         _errorMessage =
             'Lỗi API: ${e.response!.statusCode} - ${e.response!.statusMessage ?? 'Không có thông báo'}';
