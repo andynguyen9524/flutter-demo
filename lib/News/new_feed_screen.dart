@@ -25,12 +25,17 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     fetchNews();
   }
 
-  void fetchNews() async {
+  void fetchNews({bool isRefesh = false}) async {
     if (_isLoading) return;
     setState(() {
       _isLoading = true;
     });
-    await _controller.fetchNews(); // Tải tin tức ban đầu khi màn hình được tạo
+    if (isRefesh) {
+      await _controller.resetNews();
+    } else {
+      await _controller.fetchNews();
+    }
+
     setState(() {
       _isLoading = false;
     });
@@ -86,7 +91,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 _isLoading
                     ? null
                     : () async {
-                      fetchNews();
+                      fetchNews(isRefesh: true);
                     }, // Vô hiệu hóa khi đang tải
             tooltip: 'Làm mới tin tức',
           ),
@@ -149,8 +154,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
               )
               : RefreshIndicator(
                 onRefresh: () async {
-                  await _controller.resetNews();
-                  setState(() {});
+                  fetchNews(isRefesh: true);
                 },
                 child: ListView.builder(
                   controller: _scrollController, // Gán controller vào ListView
