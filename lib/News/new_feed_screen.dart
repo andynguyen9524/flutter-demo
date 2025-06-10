@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart'; // Import Dio
-import 'package:flutter_application_demo/models/new_api_model.dart'; // Import model tin tức
+import 'package:flutter_application_demo/News/new_feed_controller.dart';
 import 'package:url_launcher/url_launcher.dart'; // Để mở link bài viết
 
 class NewsFeedScreen extends StatefulWidget {
@@ -11,24 +10,30 @@ class NewsFeedScreen extends StatefulWidget {
 }
 
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
-  final List<Article> _articles = []; // Danh sách các bài viết để hiển thị
-  bool _isLoading = false; // Cờ trạng thái tải ban đầu
-  String? _errorMessage; // Thông báo lỗi
-  int _currentPage = 1; // Trang hiện tại đang tải
-
   // Khởi tạo ScrollController để theo dõi vị trí cuộn
   final ScrollController _scrollController = ScrollController();
-
-  // Khởi tạo Dio instance
-  final Dio _dio = Dio();
+  final NewFeedController _controller = NewFeedController();
+  bool _isLoading = false; // Cờ trạng thái tải ban đầu
 
   @override
   void initState() {
     super.initState();
 
-    _fetchNews(page: _currentPage); // Tải tin tức ban đầu khi màn hình được tạo
     // Thêm listener để bắt sự kiện cuộn
     _scrollController.addListener(_onScroll);
+
+    fetchNews();
+  }
+
+  void fetchNews() async {
+    if (_isLoading) return;
+    setState(() {
+      _isLoading = true;
+    });
+    await _controller.fetchNews(); // Tải tin tức ban đầu khi màn hình được tạo
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -39,79 +44,19 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   }
 
   // Hàm listener cho ScrollController
-  void _onScroll() {
+  void _onScroll() async {
     // Kiểm tra nếu đã cuộn gần đến cuối danh sách (ví dụ: 90% chiều dài)
     // và không đang tải, và còn trang để tải
     if (_scrollController.position.pixels >=
             _scrollController.position.maxScrollExtent * 0.9 &&
         !_isLoading) {
       print('Đã cuộn gần cuối, tải thêm dữ liệu...');
-      _fetchNews(page: _currentPage);
-    }
-  }
 
-  // Hàm bất đồng bộ để lấy tin tức từ API
-  // `page`: Trang muốn tải
-  // `isInitialLoad`: True nếu đây là lần tải đầu tiên, False nếu là tải thêm
-  Future<void> _fetchNews({required int page}) async {
-    // Tránh gọi API nhiều lần cùng lúc
-    if (_isLoading) return;
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final String apiUrl =
-          'https://news-api14.p.rapidapi.com/v2/trendings?topic=World&language=en&page=$page&limit=5';
-
-      ///v2/trendings?topic=Sports&language=en
-      final response = await _dio.get(
-        apiUrl,
-        options: Options(
-          headers: {
-            'X-RapidAPI-Host': 'news-api14.p.rapidapi.com',
-            'X-RapidAPI-Key':
-                '92c708b985mshf441688a08bbcc3p143eb1jsn420f130265f2', // <-- THAY THẾ BẰNG API KEY CỦA BẠN
-          },
-        ),
-      );
-
-      if (response.statusCode == 200 && response.data != null) {
-        if (response.data is Map<String, dynamic>) {
-          final NewsApiResponse newApiResponse = NewsApiResponse.fromJson(
-            response.data as Map<String, dynamic>,
-          );
-          setState(() {
-            // Thêm các bài viết mới vào danh sách hiện có
-            _articles.addAll(newApiResponse.data ?? []);
-
-            // Chuẩn bị cho lần tải tiếp theo
-            _currentPage = (newApiResponse.page ?? 0) + 1;
-          });
-        } else {
-          setState(() {
-            _errorMessage =
-                'Phản hồi API có định dạng không mong muốn. Nhận được kiểu: ${response.data.runtimeType}';
-          });
-        }
-      } else {
-        setState(() {
-          _errorMessage =
-              'Không thể tải tin tức: ${response.statusCode} - ${response.statusMessage}';
-        });
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        setState(() {
-          _errorMessage = e.message;
-        });
-      }
-    } catch (e) {
+      if (_isLoading) return;
       setState(() {
-        _errorMessage = 'Loi khong xac dinh duoc';
+        _isLoading = true;
       });
-    } finally {
+      await _controller.fetchNews();
       setState(() {
         _isLoading = false;
       });
@@ -141,10 +86,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 _isLoading
                     ? null
                     : () async {
-                      _currentPage = 1;
-                      _articles.clear();
-                      await _fetchNews(page: _currentPage);
-                      setState(() {});
+                      fetchNews();
                     }, // Vô hiệu hóa khi đang tải
             tooltip: 'Làm mới tin tức',
           ),
@@ -152,12 +94,13 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
       ),
       body:
           _isLoading &&
-                  _articles
+                  _controller
+                      .articles
                       .isEmpty // Chỉ hiển thị loading ban đầu nếu chưa có bài viết nào
               ? const Center(
                 child: CircularProgressIndicator(color: Colors.blueGrey),
               )
-              : _errorMessage != null
+              : _controller.errorMessage != null
               ? Center(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -171,7 +114,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        _errorMessage!,
+                        _controller.errorMessage!,
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 16, color: Colors.red),
                       ),
@@ -179,7 +122,11 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       ElevatedButton(
                         // ĐÃ SỬA: Thêm page: 1 vào lời gọi hàm _fetchNews
                         onPressed:
-                            _isLoading ? null : () => _fetchNews(page: 1),
+                            _isLoading
+                                ? null
+                                : () async {
+                                  fetchNews();
+                                },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueGrey,
                           foregroundColor: Colors.white,
@@ -190,7 +137,9 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                   ),
                 ),
               )
-              : _articles.isEmpty && !_isLoading && _errorMessage == null
+              : _controller.articles.isEmpty &&
+                  _isLoading &&
+                  _controller.errorMessage == null
               ? const Center(
                 // Trường hợp không có dữ liệu sau khi tải
                 child: Text(
@@ -200,20 +149,18 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
               )
               : RefreshIndicator(
                 onRefresh: () async {
-                  _currentPage = 1;
-                  _articles.clear();
-                  await _fetchNews(page: _currentPage);
+                  await _controller.resetNews();
                   setState(() {});
                 },
                 child: ListView.builder(
                   controller: _scrollController, // Gán controller vào ListView
                   padding: const EdgeInsets.all(8.0),
                   itemCount:
-                      _articles.length +
+                      _controller.articles.length +
                       1, // Thêm 1 item cho loading hoặc thông báo hết dữ liệu
                   itemBuilder: (context, index) {
                     // Hiển thị loading indicator ở cuối danh sách
-                    if (index == _articles.length) {
+                    if (index == _controller.articles.length) {
                       return const Center(
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
@@ -224,7 +171,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       );
                     }
 
-                    final article = _articles[index];
+                    final article = _controller.articles[index];
                     return Card(
                       margin: const EdgeInsets.symmetric(vertical: 8.0),
                       elevation: 5,
