@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_demo/News/new_feed_screen.dart';
 import 'package:flutter_application_demo/home_screen.dart';
-import 'login_screen.dart';
+import 'Login/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false, // Ẩn banner "Debug" ở góc trên phải.
       // home: const LoginScreen(),
-      initialRoute: '/newFeedScreen',
+      initialRoute: '/loginScreen',
       routes: {
         '/newFeedScreen': (context) => const NewsFeedScreen(),
         '/loginScreen': (context) => const LoginScreen(),
