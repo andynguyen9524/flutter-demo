@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false, // Ẩn banner "Debug" ở góc trên phải.
       // home: const LoginScreen(),
-      initialRoute: '/loginScreen',
+      initialRoute: '/simpleGameScreen',
       routes: {
         '/newFeedScreen': (context) => const NewsFeedScreen(),
         '/loginScreen': (context) => const LoginScreen(),
